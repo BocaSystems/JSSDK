@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client-side File Handling</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            border: 1px solid #000;
+            padding: 20px;
+        }
+        .action-buttons {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .status-box {
+            margin-top: 10px;
+            color: #333;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <input type="file" id="fileInput">
+    <div class="action-buttons">
+        <button onclick="readFile()">Read File</button>
+    </div>
+    <div class="status-box" id="statusBox">No file selected.</div>
+
+    <script src="main.js"></script>
+</body>
+</html>
