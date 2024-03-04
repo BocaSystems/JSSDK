@@ -4,7 +4,7 @@ const net = require('net');
 // Replace these with your printer's IP and port
 const PRINTER_IP = '10.0.2.126';
 const PRINTER_PORT = 9100;
-
+const PORT = process.env.PORT || 5050; 
 
 //create http server 
 // var server = require('http').createServer();
@@ -25,7 +25,7 @@ const PRINTER_PORT = 9100;
 
 
 
-const wss = new WebSocket.Server({ port: 5050 });
+const wss = new WebSocket.Server({ port: PORT });
 
 wss.on('connection', function connection(ws) {
   console.log('A new client connected.');
