@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            border: 1px solid #000;
+            padding: 20px;
+        }
+        .ticket {
+            text-align: center;
+        }
+        .event-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .event-info {
+            margin: 20px 0;
+        }
+        .barcode {
+            margin: 20px 0;
+        }
+        .print-button {
+            margin: 20px 0;
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        @media print {
+            .print-button {
+                display: none;
+            }
+            body {
+                max-width: 100%;
+                margin: 0;
+                border: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ticket">
+        <div class="event-name">Boca SDK</div>
+
+        <div class="barcode">
+            <img src="lemur.jpg" alt="Barcode" width="200">
+        </div>
+        <button class="print-button" onclick="window.print();">Print Ticket</button>
+    </div>
+</body>
+</html>

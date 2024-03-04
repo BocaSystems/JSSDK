@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+    <title>Serial Port Communication</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const connectButton = document.getElementById('connect');
+            const textField = document.getElementById('textfield');
+            const sendButton = document.getElementById('send');
+            const statusBox = document.getElementById('statusBox'); // Get the status box
+            let port;
+
+            async function connectSerial() {
+                try {
+                    port = await navigator.serial.requestPort();
+                    await port.open({ baudRate: 115200 });
+                    console.log('Serial port opened');
+                    textField.disabled = false;
+                    sendButton.disabled = false;
+                    readSerialPort(); // Start reading from the serial port
+                } catch (e) {
+                    console.error('Error opening serial port:', e);
+                }
+            }
+
+            async function writeToSerialPort(data) {
+                if (port) {
+                    const writer = port.writable.getWriter();
+                    const encoder = new TextEncoder(); // Use the TextEncoder to convert string to Uint8Array
+                    const dataToSend = encoder.encode(data); // Encode the string to a Uint8Array
+                    await writer.write(dataToSend);
+                    writer.releaseLock();
+                    console.log('Data sent:', data);
+                } else {
+                    console.log('Serial port is not connected.');
+                }
+            }   
+
+            async function readSerialPort() {
+                const reader = port.readable.getReader();
+
+                try {
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) {
+                        // The stream has been closed or the reader canceled.
+                        console.log('Stream closed');
+                        break;
+                    }
+                    // Process each byte in the value
+                    value.forEach(byte => {
+                        switch(byte) {
+                            case 0x6:
+                                statusBox.value = "ACK";
+                                break;
+                            case 0x11:
+                                statusBox.value = "X-On";
+                                break;
+                            default:
+                                statusBox.value = `${byte}` + '\n';
+                        }
+                    });
+
+                    }
+                } 
+                catch (error) {
+                    console.error('Read error:', error);
+                } 
+                finally {
+                reader.releaseLock();
+                }
+            }
+
+            connectButton.addEventListener('click', async () => {
+                await connectSerial();
+            });
+
+            sendButton.addEventListener('click', async () => {
+                const data = textField.value; // Get the data from the text field
+                await writeToSerialPort(data); // Send the text field data
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h2>Serial Port Communication</h2>
+    <button id="connect">Connect to Serial Port</button>
+    <input type="text" id="textfield" placeholder="Enter data to send" disabled></input>
+    <button id="send" disabled>Send</button>
+</body>
+
+<footer>
+    
+    <textarea id="statusBox" readonly style="margin-top: 20px;"></textarea>
+
+</footer>
+
+</html>

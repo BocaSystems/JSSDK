@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket TCP-like Connection</title>
+    <script>
+        let socket; // Holds the WebSocket connection
+
+        function toggleConnection() {
+            const ip = document.getElementById('ipAddress').value;
+            const connectButton = document.getElementById('connect');
+
+            // Connect if not already connected, disconnect otherwise
+            if (connectButton.value === "Connect") {
+
+                socket = new WebSocket('ws://' + ip + ':80');
+
+                socket.onopen = function(event) {
+                    console.log('Connection opened');
+                    connectButton.value = "Disconnect";
+                    document.getElementById('sendBits').disabled = false;
+                };
+
+                socket.onclose = function(event) {
+                    console.log('Connection closed');
+                    connectButton.value = "Connect";
+                    document.getElementById('sendBits').disabled = true;
+                };
+
+                socket.onerror = function(error) {
+                    console.log('WebSocket Error: ', error);
+                };
+            } else {
+                socket.close();
+            }
+        }
+
+        function sendBits() {
+            if (socket) {
+                socket.send('this is test<p>'); // Sending 8 bits
+                console.log('8 bits sent');
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="ipAddress" placeholder="Enter WebSocket server IP">
+    <input type="button" id="connect" value="Connect" onclick="toggleConnection()">
+    <input type="button" id="sendBits" value="Send 8 bits" onclick="sendBits()">
+</body>
+</html>
