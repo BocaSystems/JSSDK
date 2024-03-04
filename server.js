@@ -59,4 +59,4 @@ wss.on('connection', function connection(ws) {
   });
 });
 
-console.log('WebSocket server is running on ws://localhost:5050');
+console.log('WebSocket server is running successfully');
