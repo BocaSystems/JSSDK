@@ -6,24 +6,6 @@ const PRINTER_IP = '10.0.2.126';
 const PRINTER_PORT = 9100;
 const PORT = process.env.PORT || 5050; 
 
-//create http server 
-// var server = require('http').createServer();
-
-// var WebSocketServer = require('ws').Server;
-
-// var wss = new WebSocketServer({server: server}, { port: 5050 }, function(){});
-
-
-// server.listen(3000);
-
-//
-
-
-
-
-
-
-
 
 const wss = new WebSocket.Server({ port: PORT });
 
