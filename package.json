@@ -3,13 +3,13 @@
     "description": "a really cool app",
     "version": "1.0.0",
     "engines": {
-      "node": "20.11.1"
+        "node": "20.11.1"
     },
     "dependencies": {
-      "ws": "^7.4.6"
+        "express": "^4.18.3",
+        "ws": "^7.4.6"
     },
     "scripts": {
-      "start": "node server.js"
+        "start": "node server.js"
     }
-  }
-  
+}
