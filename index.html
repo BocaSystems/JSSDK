@@ -7,7 +7,7 @@
 // Wait for the DOM to be loaded before setting up the WebSocket connection
 document.addEventListener('DOMContentLoaded', function () {
     //var ws = new WebSocket('ws://localhost:5050');
-    var wsUrl = 'wss://' + window.location.host;
+    var wsUrl = 'wss://jssdk';
     var ws = new WebSocket(wsUrl);
 
     ws.onopen = function(event) {
