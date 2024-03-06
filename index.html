@@ -1,19 +1,17 @@
-<script src="node_modules/socket.io/client-dist/socket.io.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
 
 <script>
-    
-    
-
-
     // Wait for the DOM to be loaded before setting up the WebSocket connection
     document.addEventListener('DOMContentLoaded', function () {
     
-        //var socket = io();
         var el;
         var host = location.protocol + '//' + location.host;
+
         //test
         var socket = io.connect(host);
         //var socket = io();
+
         socket.on('time', function(timeString) {
           el = document.getElementById('server-time')
           el.innerHTML = 'Server time: ' + timeString;
