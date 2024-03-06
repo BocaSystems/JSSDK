@@ -40,11 +40,8 @@
         // Send the message when the button is clicked
         document.getElementById('sendButton').addEventListener('click', function () {
             var message = document.getElementById('textField').value;
-            if (ws.readyState === WebSocket.OPEN) {
-                ws.send(message);
-            } else {
-                console.log('WebSocket connection is not open.');
-            }
+            socket.send(message);
+
         });
     });
     </script>
