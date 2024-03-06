@@ -38,12 +38,12 @@ setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
 
 
 //server handlers
-io.on('connection', function connection(ws) {
+io.on('connection', (socket) => {
   console.log('A new client connected.');
   
-  io.send('Welcome to the WebSocket server!');
+  socket.send('Welcome to the WebSocket server!');
 
-  io.on('message', function incoming(message) {
+  socket.on('message', function incoming(message) {
     console.log('Received from client:', message);
     
     // Open a connection to the printer
@@ -76,7 +76,7 @@ io.on('connection', function connection(ws) {
 
     printerConnection.on('error', function(err) {
       console.error('Printer connection error:', err);
-      io.send('Error communicating with printer: ' + err.message); // Inform the client about the error
+      socket.send('Error communicating with printer: ' + err.message); // Inform the client about the error
     });
 
     printerConnection.on('close', function() {
@@ -84,7 +84,7 @@ io.on('connection', function connection(ws) {
     });
     
     // Echo the message back to the client
-    io.send(`Sent to printer: ${message}`);
+    socket.send(`Sent to printer: ${message}`);
   });
 });
 
