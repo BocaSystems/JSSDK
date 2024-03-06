@@ -3,41 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <title>Print via WebSocket</title>
+<script src="node_modules/socket.io/client-dist/socket.io.js"></script>
 <script>
 // Wait for the DOM to be loaded before setting up the WebSocket connection
+
+//var socket = io();
+var el;
+var host = location.protocol + '//' + location.host;
+
+//test
+//var socket = io.connect(host);
+var socket = io();
+
+socket.on('time', function(timeString) {
+  el = document.getElementById('server-time')
+  el.innerHTML = 'Server time: ' + timeString;
+});
 document.addEventListener('DOMContentLoaded', function () {
 
 
 
+    //working
+    // var wsUrl = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host;
+    // var ws = new WebSocket(wsUrl);
 
-    //var ws = new WebSocket('ws://localhost:5050');
-    const PORT = process.env.PORT || 5050;
-    const INDEX = '/index.html';
+    //working
+    // ws.onopen = function(event) {
+    //     console.log('Connection to server opened.');
+    // };
 
-    const server = express()
-      .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
-      .listen(PORT, () => console.log(`Listening on ${PORT}`));
-    //
-
-    var wsUrl = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host;
-    var ws = new WebSocket(wsUrl);
-
-
-
-
-    ws.onopen = function(event) {
-        console.log('Connection to server opened.');
-    };
-
-    ws.onmessage = function(event) {
-        console.log(`Message from server: ${event.data}`);
+    // ws.onmessage = function(event) {
+    //     console.log(`Message from server: ${event.data}`);
         
-        document.getElementById('serverResponse').textContent = `Server: ${event.data}`;
-    };
+    //     document.getElementById('serverResponse').textContent = `Server: ${event.data}`;
+    // };
 
-    ws.onerror = function(event) {
-        console.error("WebSocket error observed:", event);
-    };
+    // ws.onerror = function(event) {
+    //     console.error("WebSocket error observed:", event);
+    // };
 
     // Send the message when the button is clicked
     document.getElementById('sendButton').addEventListener('click', function () {
@@ -56,5 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
 <input type="text" id="textField" placeholder="Enter text to print">
 <button id="sendButton">Send to Printer</button>
 <p id="serverResponse"></p> <!-- Display messages from the server -->
+<p id="server-time"></p>    <!-- Displays the time from the server -->
 </body>
 </html>
