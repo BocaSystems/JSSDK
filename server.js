@@ -37,6 +37,18 @@ io.on('connection', (socket) => {
 setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
 
 
+io.on('message', function incoming(message) {
+  console.log('Received from client:', message);
+
+  // Open a connection to the printer
+  const printerConnection = new net.Socket();
+  
+  printerConnection.connect(PRINTER_PORT, PRINTER_IP, function() {
+    console.log('Connected to printer, sending message');
+    printerConnection.write(message + '\n'); // Sending the message to the printer
+  });
+});
+
 //test
 // wss.on('connection', (ws) => {
 //   console.log('Client connected');
