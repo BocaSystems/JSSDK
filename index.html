@@ -12,8 +12,8 @@ var el;
 var host = location.protocol + '//' + location.host;
 
 //test
-//var socket = io.connect(host);
-var socket = io();
+var socket = io.connect(host);
+//var socket = io();
 
 socket.on('time', function(timeString) {
   el = document.getElementById('server-time')
