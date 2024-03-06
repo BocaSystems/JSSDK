@@ -1,58 +1,62 @@
+<script src="node_modules/socket.io/client-dist/socket.io.js"></script>
+
+<script>
+    // Wait for the DOM to be loaded before setting up the WebSocket connection
+    
+    //var socket = io();
+    var el;
+    var host = location.protocol + '//' + location.host;
+    
+    //test
+    var socket = io.connect(host);
+    //var socket = io();
+    
+    socket.on('time', function(timeString) {
+      el = document.getElementById('server-time')
+      el.innerHTML = 'Server time: ' + timeString;
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+    
+    
+    
+        //working
+        // var wsUrl = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host;
+        // var ws = new WebSocket(wsUrl);
+    
+        //working
+        // ws.onopen = function(event) {
+        //     console.log('Connection to server opened.');
+        // };
+    
+        // ws.onmessage = function(event) {
+        //     console.log(`Message from server: ${event.data}`);
+            
+        //     document.getElementById('serverResponse').textContent = `Server: ${event.data}`;
+        // };
+    
+        // ws.onerror = function(event) {
+        //     console.error("WebSocket error observed:", event);
+        // };
+    
+        // Send the message when the button is clicked
+        document.getElementById('sendButton').addEventListener('click', function () {
+            var message = document.getElementById('textField').value;
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.send(message);
+            } else {
+                console.log('WebSocket connection is not open.');
+            }
+        });
+    });
+    </script>
+
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Print via WebSocket</title>
-<script src="node_modules/socket.io/client-dist/socket.io.js"></script>
-<script>
-// Wait for the DOM to be loaded before setting up the WebSocket connection
 
-//var socket = io();
-var el;
-var host = location.protocol + '//' + location.host;
-
-//test
-var socket = io.connect(host);
-//var socket = io();
-
-socket.on('time', function(timeString) {
-  el = document.getElementById('server-time')
-  el.innerHTML = 'Server time: ' + timeString;
-});
-document.addEventListener('DOMContentLoaded', function () {
-
-
-
-    //working
-    // var wsUrl = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host;
-    // var ws = new WebSocket(wsUrl);
-
-    //working
-    // ws.onopen = function(event) {
-    //     console.log('Connection to server opened.');
-    // };
-
-    // ws.onmessage = function(event) {
-    //     console.log(`Message from server: ${event.data}`);
-        
-    //     document.getElementById('serverResponse').textContent = `Server: ${event.data}`;
-    // };
-
-    // ws.onerror = function(event) {
-    //     console.error("WebSocket error observed:", event);
-    // };
-
-    // Send the message when the button is clicked
-    document.getElementById('sendButton').addEventListener('click', function () {
-        var message = document.getElementById('textField').value;
-        if (ws.readyState === WebSocket.OPEN) {
-            ws.send(message);
-        } else {
-            console.log('WebSocket connection is not open.');
-        }
-    });
-});
-</script>
 </head>
 <body>
 <h2>Send Text to Printer via WebSocket</h2>
