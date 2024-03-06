@@ -37,17 +37,58 @@ io.on('connection', (socket) => {
 setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
 
 
-io.on('message', function incoming(message) {
-  console.log('Received from client:', message);
-
-  // Open a connection to the printer
-  const printerConnection = new net.Socket();
+//server handlers
+io.on('connection', function connection(ws) {
+  console.log('A new client connected.');
   
-  printerConnection.connect(PRINTER_PORT, PRINTER_IP, function() {
-    console.log('Connected to printer, sending message');
-    printerConnection.write(message + '\n'); // Sending the message to the printer
+  io.send('Welcome to the WebSocket server!');
+
+  io.on('message', function incoming(message) {
+    console.log('Received from client:', message);
+    
+    // Open a connection to the printer
+    const printerConnection = new net.Socket();
+
+    printerConnection.connect(PRINTER_PORT, PRINTER_IP, function() {
+      console.log('Connected to printer, sending message');
+      printerConnection.write(message + '\n'); // Sending the message to the printer
+    });
+
+    printerConnection.on('data', function(data) {
+        console.log('Raw data received from printer:', data);
+        
+        const firstByte = data[0];
+    
+        switch(firstByte) {
+            case 0x06: 
+                console.log('ACK');
+                break;
+            case 0x11: 
+                console.log("X-On");
+                break;
+            default:
+                // Convert the buffer to a hexadecimal string for logging
+                console.log('Received:', data.toString('hex'));
+        }
+    
+        printerConnection.destroy(); // Close the connection after receiving the response
+    });
+
+    printerConnection.on('error', function(err) {
+      console.error('Printer connection error:', err);
+      io.send('Error communicating with printer: ' + err.message); // Inform the client about the error
+    });
+
+    printerConnection.on('close', function() {
+      console.log('Connection to printer closed');
+    });
+    
+    // Echo the message back to the client
+    io.send(`Sent to printer: ${message}`);
   });
 });
+
+console.log('WebSocket server is running successfully');
 
 //test
 // wss.on('connection', (ws) => {
