@@ -1,5 +1,20 @@
-<script src="/socket.io/socket.io.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Print via WebSocket</title>
 
+</head>
+<body>
+<h2>Send Text to Printer via WebSocket</h2>
+<input type="text" id="textField" placeholder="Enter text to print">
+<button id="sendButton">Send to Printer</button>
+<p id="server-time"></p>    <!-- time -->
+</body>
+</html>
+
+
+<script src="/socket.io/socket.io.js"></script>
 
 <script>
     // Wait for the DOM to be loaded before setting up the WebSocket connection
@@ -16,26 +31,10 @@
           el = document.getElementById('server-time')
           el.innerHTML = 'Server time: ' + timeString;
         });
-    
-    
-        //working
-        // var wsUrl = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host;
-        // var ws = new WebSocket(wsUrl);
-    
-        //working
-        // ws.onopen = function(event) {
-        //     console.log('Connection to server opened.');
-        // };
-    
-        // ws.onmessage = function(event) {
-        //     console.log(`Message from server: ${event.data}`);
-            
-        //     document.getElementById('serverResponse').textContent = `Server: ${event.data}`;
-        // };
-    
-        // ws.onerror = function(event) {
-        //     console.error("WebSocket error observed:", event);
-        // };
+
+        socket.onopen = function(event) {
+            console.log('Connection to server opened.');
+        };
     
         // Send the message when the button is clicked
         document.getElementById('sendButton').addEventListener('click', function () {
@@ -46,18 +45,3 @@
     </script>
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Print via WebSocket</title>
-
-</head>
-<body>
-<h2>Send Text to Printer via WebSocket</h2>
-<input type="text" id="textField" placeholder="Enter text to print">
-<button id="sendButton">Send to Printer</button>
-<p id="serverResponse"></p> <!-- Display messages from the server -->
-<p id="server-time"></p>    <!-- Displays the time from the server -->
-</body>
-</html>
