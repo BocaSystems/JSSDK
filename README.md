@@ -79,7 +79,7 @@ The sendToPrinter function manages the connection to the printer. It opens a TCP
 
 # Heroku and NGROK
 
-    ##Below you will find links to the deployment guides for both Heroku and NGROK which are the two services used to test the sample code online. Theoretically may be served and exposed by and cloud service platform as long as the servers are configured appropriately.
+## Below you will find links to the deployment guides for both Heroku and NGROK which are the two services used to test the sample code online. Theoretically may be served and exposed by and cloud service platform as long as the servers are configured appropriately.
 
     https://ngrok.com/docs/getting-started/
     https://devcenter.heroku.com/articles/github-integration
