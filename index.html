@@ -1,3 +1,8 @@
+<!-- This HTML file connects to the websocket server automatically once the document 
+is loaded. Afer this the user may input text into the text field and send it by clicking the send 
+button. The time is shown for confirmation of a successful connection to the server. -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,18 +19,17 @@
 </html>
 
 
-<script src="/socket.io/socket.io.js"></script>
+<script src="/socket.io/socket.io.js"></script> <!--very important for HTML file to find server-->
 
 <script>
-    // Wait for the DOM to be loaded before setting up the WebSocket connection
+    // Wait for the DOM to be loaded before setting up the connection
     document.addEventListener('DOMContentLoaded', function () {
     
         var el;
-        var host = location.protocol + '//' + location.host;
+        var host = location.protocol + '//' + location.host; 
 
-        //test
+        //connection to IOserver
         var socket = io.connect(host);
-        //var socket = io();
 
         socket.on('time', function(timeString) {
           el = document.getElementById('server-time')
